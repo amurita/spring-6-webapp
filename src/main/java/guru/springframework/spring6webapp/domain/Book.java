@@ -82,6 +82,20 @@ public class Book {
     }
 
     /*
+     * Following the toString method, to display all property names and its
+     * values.
+     * */
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", authors=" + authors +
+                '}';
+    }
+
+    /*
      * Following the "equals" and "hashCode" methods, so that Hibernate is
      * able to determine object equity.
      * */
