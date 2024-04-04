@@ -2,8 +2,10 @@ package guru.springframework.spring6webapp.bootstrap;
 
 import guru.springframework.spring6webapp.domain.Author;
 import guru.springframework.spring6webapp.domain.Book;
+import guru.springframework.spring6webapp.domain.Publisher;
 import guru.springframework.spring6webapp.repositories.AuthorRepository;
 import guru.springframework.spring6webapp.repositories.BookRepository;
+import guru.springframework.spring6webapp.repositories.PublisherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -22,10 +24,13 @@ public class BootstrapData implements CommandLineRunner {
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
 
-    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository) {
+    private final PublisherRepository publisherRepository;
+
+    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
-    }
+        this.publisherRepository = publisherRepository;
+  ;  }
 
     /**
      * @param args
@@ -41,8 +46,20 @@ public class BootstrapData implements CommandLineRunner {
         ddd.setTitle("Domain Driven Design");
         ddd.setIsbn("123456");
 
+        Publisher xyzPublisher = new Publisher();
+        xyzPublisher.setPublisherName("XYZ-Publisher");
+        xyzPublisher.setAddress("Stiftstrasse 22");
+        xyzPublisher.setCity("Frankfurt am Main");
+
+        Publisher abcPublisher = new Publisher();
+        abcPublisher.setPublisherName("ABC-Publisher");
+        abcPublisher.setAddress("Toengesgasse 11");
+        abcPublisher.setCity("Frankfurt am Main");
+
         Author ericSaved = authorRepository.save(eric);
         Book dddSaved = bookRepository.save(ddd);
+        Publisher xyzPublisherSaved = publisherRepository.save(xyzPublisher);
+        Publisher abcPublisherSaved = publisherRepository.save(abcPublisher);
 
         Author rod = new Author();
         rod.setFirstName("Rod");
@@ -61,8 +78,20 @@ public class BootstrapData implements CommandLineRunner {
         authorRepository.save(ericSaved);
         authorRepository.save(rodSaved);
 
+        xyzPublisherSaved.getAuthors().add(ericSaved);
+        xyzPublisherSaved.getAuthors().add(rodSaved);
+
+        publisherRepository.save(xyzPublisherSaved);
+
+        abcPublisherSaved.getAuthors().add(ericSaved);
+        publisherRepository.save(abcPublisherSaved);
+
         System.out.println("\nIn Bootstrap");
         System.out.println("Author Count: " + authorRepository.count());
         System.out.println("Book Count: " + bookRepository.count());
+        System.out.println("Publisher Count: " + publisherRepository.count());
+
+        System.out.println("Publisher :\n" + xyzPublisherSaved.toString());
+        System.out.println("Publisher :\n" + abcPublisherSaved.toString());
     }
 }

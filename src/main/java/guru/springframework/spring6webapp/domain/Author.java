@@ -1,7 +1,7 @@
 package guru.springframework.spring6webapp.domain;
 
-/**
- * Dependencies
+/*
+  Dependencies
  */
 import jakarta.persistence.*;
 
@@ -10,7 +10,7 @@ import java.util.Set;
 
 /**
  * Created by Amurita
- * On Donnerstag, the 28. of März, 2024
+ * On Thursday, the 28. of March 2024
  * At 10:55 o'clock
  */
 @Entity
@@ -36,6 +36,23 @@ public class Author {
 
     public void setBooks(Set<Book> books) {
         this.books = books;
+    }
+
+    /*
+    * Following the part for the entity relationship of publisher and author.
+    * */
+    @ManyToMany
+    @JoinTable(name = "publisher_author",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "publisher_id"))
+    private Set<Publisher> publishers = new HashSet<>();
+
+    public Set<Publisher> getPublishers() {
+        return publishers;
+    }
+
+    public void setPublishers(Set<Publisher> publishers) {
+        this.publishers = publishers;
     }
 
     /**
@@ -93,7 +110,8 @@ public class Author {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", books=" + books +
+                ", books=" + books + '\'' +
+                ", publishers=" + publishers +
                 '}';
     }
 
