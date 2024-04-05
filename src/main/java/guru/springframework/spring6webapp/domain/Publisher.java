@@ -29,12 +29,18 @@ public class Publisher {
     private int zip;
 
     /*
-     * Following the part for the entity relationship of author and book.
+     * Following the part for the entity relationship of author and publisher.
      * */
     @ManyToMany(mappedBy = "publishers") // Take care of the JPA mapping.
                                         // This is going to be mapped by
                                         // the authors property of the books.
     private Set<Author> authors = new HashSet<>();
+
+    /*
+    * Following the part for the entity relationship of book and publisher.
+    * */
+    @OneToMany(mappedBy = "publisher")
+    private Set<Book> books;
 
     public Long getId() {
         return id;

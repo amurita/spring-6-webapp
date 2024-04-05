@@ -37,6 +37,20 @@ public class Book {
         this.authors = authors;
     }
 
+    /*
+    * Following the part for the entity relationship of book and publisher.
+    * */
+    @ManyToOne
+    private Publisher publisher;
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
     /**
      * Getter for the ID value
      * @return the ID value for the Book Entity
